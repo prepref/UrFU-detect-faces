@@ -1,0 +1,12 @@
+./images/crop-images/vadik\image_0.jpg 0
+./images/crop-images/vadik\image_13.jpg 0
+./images/crop-images/vasya\image_11.jpg 1
+./images/crop-images/vadik\image_20.jpg 0
+./images/crop-images/vadik\image_26.jpg 0
+./images/crop-images/vasya\image_4.jpg 1
+./images/crop-images/vasya\image_16.jpg 1
+./images/crop-images/vadik\image_6.jpg 0
+./images/crop-images/vasya\image_23.jpg 1
+./images/crop-images/vadik\image_2.jpg 0
+./images/crop-images/vasya\image_8.jpg 1
+./images/crop-images/vadik\image_11.jpg 0
