@@ -1,28 +1,34 @@
 from mtcnn import MTCNN
-import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import os
 
-
-def detect_images(source_path: str, dist_path: str):
-    general_dir = source_path
-    new_general_dir = dist_path
+def detect_images(source_path, dist_path):
+    """Обнаруживает лица и сохраняет обрезанные изображения"""
     detector = MTCNN()
-    for dir_name in os.listdir(general_dir):
-        origin_dir = general_dir + "/" + dir_name
-        new_dir = new_general_dir + "/" + dir_name
-        os.makedirs(new_dir, exist_ok=True)
-        for file_name in os.listdir(origin_dir):
-            origin_path = origin_dir+'/'+file_name
-            origin_img = mpimg.imread(origin_path)
-            result = detector.detect_faces(origin_img)
-            if result:
-                (x, y, width, height) = result[0]['box']
-                cropped_img = origin_img[y:y+height, x:x+width]
-                new_path = new_dir+'/'+file_name
-                mpimg.imsave(new_path, cropped_img)
-                print(f"Обработка фото завершена {origin_path}")
-            else:
-                print(f'Лицо не обнаружено на изображении {origin_path}')
-
-detect_images("./images/source-images", "./images/crop-images")
+    
+    if not os.path.exists(source_path):
+        raise FileNotFoundError(f"Source directory not found: {source_path}")
+    
+    os.makedirs(dist_path, exist_ok=True)
+    
+    for dir_name in os.listdir(source_path):
+        src_dir = os.path.join(source_path, dir_name)
+        dst_dir = os.path.join(dist_path, dir_name)
+        os.makedirs(dst_dir, exist_ok=True)
+        
+        for file_name in os.listdir(src_dir):
+            if not file_name.lower().endswith(('.png', '.jpg', '.jpeg')):
+                continue
+                
+            img_path = os.path.join(src_dir, file_name)
+            try:
+                img = mpimg.imread(img_path)
+                faces = detector.detect_faces(img)
+                
+                if faces:
+                    x, y, w, h = faces[0]['box']
+                    x, y = max(0, x), max(0, y)
+                    cropped = img[y:y+h, x:x+w]
+                    mpimg.imsave(os.path.join(dst_dir, file_name), cropped)
+            except Exception as e:
+                print(f"Error processing {img_path}: {str(e)}")

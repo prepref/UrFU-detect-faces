@@ -4,3 +4,7 @@
 3. Запускате extract_images.py
 4. Запускаете detect_faces.py
 5. classifaication.py 
+
+Запуск fastapi
+uvicorn main:app --reload
+http://127.0.0.1:8000/docs
