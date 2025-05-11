@@ -9,7 +9,7 @@ def train_yolo_classifier(datasets_dir, runs_dir, model_path, output_path, **tra
     os.makedirs(runs_dir, exist_ok=True)
     
     # Загружаем модель
-    model = YOLO('yolov8n-cls.pt')
+    model = YOLO('yolo11n-cls.pt')
     
     # Обучаем с явным указанием всех путей
     results = model.train(
